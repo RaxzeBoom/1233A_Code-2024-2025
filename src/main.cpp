@@ -1,5 +1,5 @@
 #include "main.h"
-
+extern bool WallMechPid;
 bool TrackerOn = true;
 extern bool Toggle_GUI;
 void UI_Touch() {
@@ -15,13 +15,24 @@ void GUI(void* param)
 	}
 	Start_GUI();
 }
+void WallMechPidTask(void* param)
+{
+	while (true)
+	{
+		WallMech_PID();
+	}
+	
+	
+}
 void initialize() {
 	
 	pros::delay(300); 
 	Start_UI();
 	drivetrain.Initialize();
+	WallMechRotation.reset_position();
 	pros::screen::touch_callback(UI_Touch, TOUCH_PRESSED);
-	pros::Task  Odem_Update(GUI);
+	//pros::Task  Odem_Update(GUI);
+	pros::Task  WMPT(WallMechPidTask);
 }
 
 /**
@@ -39,7 +50,7 @@ void competition_initialize() {}
  */ 
 void autonomous() {
 	//Run_Auto();
-	Auton_1();
+	Auton_3();
 } 
 
 /**
@@ -49,14 +60,19 @@ void autonomous() {
 
 //extern pros::Task RPM_Task;
 void opcontrol() {
-	Intake.set_brake_mode(MOTOR_BRAKE_BRAKE);
+	Intake.set_brake_mode(MOTOR_BRAKE_COAST);
+	WallMech.set_brake_mode(MOTOR_BRAKE_HOLD);
 	TrackerOn = true;
 	drivetrain.Change_Brake_Type(Drivetrain::COAST);
+	WallMech.set_brake_mode(MOTOR_BRAKE_BRAKE);
 	while (true) {
+
 		drivetrain.Driver_Control();
 		Driver_Intake();
+		Driver_WallMech();
+		Driver_WmPID();
 		Mogo.Control();
-		Hang.Control();
+		Doinker.Control();
 		pros::delay(20);
 
 	}

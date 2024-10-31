@@ -81,6 +81,7 @@ void opcontrol(void);
 #include "1233A_Addons_Header/Non-Configurable/Classes/Ramsete_Class.hpp"
 #include "1233A_Addons_Header/Configurable/globals.hpp"
 #include "1233A_Addons_Header/SubSystemHeader/Intake.hpp"
+#include "1233A_Addons_Header/SubSystemHeader/WallMech.hpp"
 #include "1233A_Addons_Header/Configurable/Auto.hpp"
 #include "1233A_Addons_Header/Non-Configurable/Auto_UI.hpp"
 #include "1233A_Addons_Header/Non-Configurable/GUI.hpp"

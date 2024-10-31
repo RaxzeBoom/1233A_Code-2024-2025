@@ -3,6 +3,8 @@
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 //Drive Motor Configation
 pros::Motor Intake(21,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::Motor WallMech(-20,pros::v5::MotorGear::green,pros::v5::MotorUnits::degrees);
+pros::Rotation WallMechRotation(2);
 Drivetrain drivetrain(
 /*Left Motors Ports*/
     {-9    ,-8    ,-7} ,
@@ -44,11 +46,11 @@ Pnumatics Mogo(
     /*Reverse*/
     false
 );
-Pnumatics Hang(
+Pnumatics Doinker(
     /*Port*/
     {'B'},
     /*Controller Button For Activation*/
-    pros::E_CONTROLLER_DIGITAL_X,
+    pros::E_CONTROLLER_DIGITAL_DOWN,
     /*Reverse*/
     false
 );

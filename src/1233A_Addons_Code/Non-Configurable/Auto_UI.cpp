@@ -10,7 +10,7 @@ int Touch_Checker_NUM = 0;
 void Top_Buttons()
 {
     //Makes 3 top rectangles that are 50 by 60 pixels
-    pros::screen::set_pen(pros::Color::green);
+    pros::screen::set_pen(pros::Color::blue);
     pros::screen::fill_rect(10,10,70,60);
     pros::screen::set_pen(pros::Color::white);
     pros::screen::draw_rect(10,10,70,60);
@@ -71,7 +71,7 @@ void Close_Auto_Text()
 {
 
     //Turns the Top Red and put in in auto names
-    pros::screen::set_pen(pros::Color::green);
+    pros::screen::set_pen(pros::Color::blue);
     pros::screen::fill_rect(0,0,480,100);
     pros::screen::set_pen(pros::Color::green);
     pros::screen::set_eraser(pros::Color::black);
