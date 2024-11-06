@@ -50,11 +50,12 @@ void competition_initialize() {}
  */ 
 void autonomous() {
 	//Run_Auto();
-	Auton_3();
+	Auton_8();
 } 
 
 /**
  * Runs the operator control code
+ * 
  */
 
 

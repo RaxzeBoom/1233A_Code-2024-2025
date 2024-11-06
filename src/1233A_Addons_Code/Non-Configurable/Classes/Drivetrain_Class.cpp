@@ -225,7 +225,7 @@
     Reset_Motor_Position();
 
     // Constants and initial calculations
-    const double target = inches * 1300/24;
+    const double target = inches *  1300/24;
     //(((inches / (Wheel_Diameter * M_PI)) * 360 )/ Gear_Ratio)/ 1.1;
     const double Max = 127; //Max speed for motors
 
@@ -285,7 +285,7 @@
     Reset_Motor_Position();
 
     // Constants and initial calculations
-    const double target = inches *1280/24;
+    const double target = inches *1340/24;
 //(inches / (Wheel_Diameter * M_PI)) * 360 * 1.1;
     const double Max = 127; //Max speed for motors
 
