@@ -362,7 +362,7 @@
         if (variable.Passive_Power) {
             targetSpeed = (targetSpeed > 0) ? fmax(targetSpeed, 17) : fmin(targetSpeed, -17);
         }
-
+        targetSpeed = std::clamp(targetSpeed,-maxTurnSpeed,maxTurnSpeed);
         // Adjust drivetrain speed based on the sign of the angle
         Set_Drivetrain_Vel((shortestAngle < 0) ? -targetSpeed : targetSpeed, (shortestAngle < 0) ? targetSpeed : -targetSpeed);
 

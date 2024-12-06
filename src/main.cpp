@@ -49,8 +49,8 @@ void competition_initialize() {}
  * Runs the user autonomous code
  */ 
 void autonomous() {
-	//Run_Auto();
-	Auton_8();
+	 Run_Auto();
+	//Auton_13();
 } 
 
 /**
