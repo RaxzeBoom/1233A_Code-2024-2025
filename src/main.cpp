@@ -50,7 +50,7 @@ void competition_initialize() {}
  */ 
 void autonomous() {
 	 Run_Auto();
-	//Auton_13();
+	 //Auton_7();
 } 
 
 /**
@@ -62,16 +62,16 @@ void autonomous() {
 //extern pros::Task RPM_Task;
 void opcontrol() {
 	Intake.set_brake_mode(MOTOR_BRAKE_COAST);
-	WallMech.set_brake_mode(MOTOR_BRAKE_HOLD);
 	TrackerOn = true;
 	drivetrain.Change_Brake_Type(Drivetrain::COAST);
 	WallMech.set_brake_mode(MOTOR_BRAKE_BRAKE);
 	while (true) {
-
+		controller.print(2,2,"%3f",drivetrain.Get_Position('l'));
 		drivetrain.Driver_Control();
 		Driver_Intake();
 		Driver_WallMech();
 		Driver_WmPID();
+		IntakeLift.Control();
 		Mogo.Control();
 		Doinker.Control();
 		pros::delay(20);

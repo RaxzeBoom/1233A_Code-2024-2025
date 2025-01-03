@@ -38,8 +38,7 @@ class Drivetrain {
     std::vector<pros::IMU> IMU_List;
     double current_Max_RPM;
     double Base_Width;
-    double Wheel_Diameter;
-    double Gear_Ratio;
+    double StraightTPI;
     double Target_Heading;
     bool RPM_PID_State = true;
     bool Drivetype = false;
@@ -52,7 +51,7 @@ class Drivetrain {
     double Get_Temp();
     void Reset_Motor_Position();
     public:
-    Drivetrain(const std::vector<int>& leftMotorPorts, const std::vector<int>& rightMotorPorts, const std::vector<int>& IMU_Ports , double WheelDiameter, const std::vector<double> Gears);
+    Drivetrain(const std::vector<int>& leftMotorPorts, const std::vector<int>& rightMotorPorts, const std::vector<int>& IMU_Ports ,double StraightTPI_);
     void Initialize();
     void Driver_Control();
     void Set_Side_Drivetrain(char side , double speed);

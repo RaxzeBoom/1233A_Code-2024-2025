@@ -2,20 +2,19 @@
 //Controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 //Drive Motor Configation
-pros::Motor Intake(21,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
-pros::Motor WallMech(-20,pros::v5::MotorGear::green,pros::v5::MotorUnits::degrees);
-pros::Rotation WallMechRotation(2);
+pros::Motor Intake(-7,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::MotorGroup WallMech({16, -6},pros::v5::MotorGear::green,pros::v5::MotorUnits::degrees);
+pros::Rotation WallMechRotation(17);
 Drivetrain drivetrain(
 /*Left Motors Ports*/
-    {-9    ,-8    ,-7} ,
+    {-8    ,9    ,-10} ,
 /*Right Motors Ports*/
-    {6      ,5     ,4 } ,
+    {18      ,19     ,-20} ,
 /*IMUs Ports*/ 
-    {3} , 
-/*Wheel Size*/
-    2.75, 
-/*Gear Ratio{Powered,Driven}*/
-    {36,48});
+    {5} , 
+/*Straight TPI*/
+    1110.8+50
+);
 Odometry Odom(
 /*Drivetrain*/
     &drivetrain ,
@@ -46,9 +45,17 @@ Pnumatics Mogo(
     /*Reverse*/
     false
 );
-Pnumatics Doinker(
+Pnumatics IntakeLift(
     /*Port*/
     {'B'},
+    /*Controller Button For Activation*/
+    pros::E_CONTROLLER_DIGITAL_B,
+    /*Reverse*/
+    false
+);
+Pnumatics Doinker(
+    /*Port*/
+    {'C'},
     /*Controller Button For Activation*/
     pros::E_CONTROLLER_DIGITAL_DOWN,
     /*Reverse*/

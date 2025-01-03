@@ -1,9 +1,10 @@
 #include "main.h"
 extern int Driver_WallMech_Speed;
 extern double WallMechPidVar[3];
-extern double DriverWallMechAngle;
-extern double DriverWallMechAngleEnd;
-double WallMech_Target = 0;
+extern double DriverWallMechAngleRest;
+extern double DriverWallMechAngleLoad;
+extern double DriverWallMechAngleShoot;
+double WallMech_Target = DriverWallMechAngleRest;
 bool WallMechPid = true;
 void SetWallMech(int power)
 {
@@ -15,28 +16,41 @@ void StopWallMech()
 }
 void Driver_WallMech() {
     int WallMechpower = 0;
-    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
         WallMechpower = Driver_WallMech_Speed;
         WallMechPid = false;
+        if(!WallMechPid == true)
+        {
+        SetWallMech(WallMechpower);
+        }
     }
-    else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+    else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
         WallMechpower = Driver_WallMech_Speed*-1;
         WallMechPid = false;
-    }
-    if(!WallMechPid == true)
+        if(!WallMechPid == true)
+        {
+        SetWallMech(WallMechpower);
+        }
+    }else if(!WallMechPid == true)
     {
-    SetWallMech(WallMechpower);
+        StopWallMech();
     }
+   
 }
 void Driver_WmPID(){
-    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X) || controller.get_digital(pros::E_CONTROLLER_DIGITAL_B))
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))
     {
-        WallMech_Target = DriverWallMechAngle;
+        WallMech_Target = DriverWallMechAngleRest;
         WallMechPid = true;
     }
-    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
     {
-        WallMech_Target = DriverWallMechAngleEnd;
+        WallMech_Target = DriverWallMechAngleLoad;
+        WallMechPid = true;
+    }
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+    {
+        WallMech_Target = DriverWallMechAngleShoot;
         WallMechPid = true;
     }
 }
@@ -48,10 +62,11 @@ void WallMech_PID()
     {
         if(WallMechPid)
         {
-            double error = -(fmod((WallMech_Target-(WallMechRotation.get_angle()/100) + 540.0), 360.0)-180.0);
+            double error = -(fmod((WallMech_Target-(WallMechRotation.get_angle()/100) + 180.0), 360.0)-180.0);
 
             double output = error * WallMechPidVar[0];
             double pos = WallMechRotation.get_angle()/100;
+            /*
             if((pos < 210 & pos > 90) & !(WallMech_Target < 220 & WallMech_Target > 90))
             {
                 output = fabs(output);
@@ -60,10 +75,11 @@ void WallMech_PID()
             {
                 output = -fabs(output);
             }
+            */
             output = std::clamp(output,-100.0,100.0);
-            SetWallMech(-output);
+            SetWallMech(output);
 
-            controller.print(2,2,"%3f",error);
+            //controller.print(2,2,"%3f",error);
         }
         pros::delay(30);
     }

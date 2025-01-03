@@ -1,6 +1,6 @@
 #include "main.h"
-    //Makes a Drivetrain Class for controlling drivetrain functions{All Left Motor Ports | All Right Motor Ports | All IMUs | The wheel diamter | Driven gear then Powered gear}
-    Drivetrain::Drivetrain(const std::vector<int>& leftMotorPorts, const std::vector<int>& rightMotorPorts, const std::vector<int>& IMU_Ports , double WheelDiameter, const std::vector<double> Gears) {
+    //Makes a Drivetrain Class for controlling drivetrain functions{All Left Motor Ports | All Right Motor Ports | All IMUs | The wheel diamter | Driven gear then Powered gear}W
+    Drivetrain::Drivetrain(const std::vector<int>& leftMotorPorts, const std::vector<int>& rightMotorPorts, const std::vector<int>& IMU_Ports , double StraightTPI_) {
         for (int port : leftMotorPorts) {
             leftMotors.emplace_back(port,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
         }
@@ -10,8 +10,7 @@
         for (int port : IMU_Ports){
             IMU_List.emplace_back(port);
         }
-        Wheel_Diameter = WheelDiameter;
-        Gear_Ratio = Gears[0]/Gears[1];
+        StraightTPI = StraightTPI_;
     }
     //Sets a list of Motors to a set speed up to 127
     void Drivetrain::Set_Drive_Motors(std::vector<pros::Motor>& motors, double speed) {
@@ -150,9 +149,10 @@
     double Drivetrain::Get_Heading(){
         double total = 0;
         for(pros::Imu IMU : IMU_List){
-            total = total + IMU.get_heading();
+            total = total + IMU.get_heading();//fmod((IMU.get_heading()+180), 360.0)-180.0;//IMU.get_heading();
         }
-        return total/IMU_List.size();
+        total = total/IMU_List.size();
+        return total; //= (total < 0 ? 180 + (180 + total) : total);
     }
     //Sets the heading on all IMU
     void Drivetrain::Set_Heading(double heading_){
@@ -225,7 +225,7 @@
     Reset_Motor_Position();
 
     // Constants and initial calculations
-    const double target = inches *  1300/24;
+    const double target = inches *  StraightTPI/24;
     //(((inches / (Wheel_Diameter * M_PI)) * 360 )/ Gear_Ratio)/ 1.1;
     const double Max = 127; //Max speed for motors
 
@@ -241,7 +241,9 @@
     double lAvgTicks = 0, rAvgTicks = 0, avgTicks = 0;
     double error = 0, prevError = 0, accumulativeError = 0;
     double headingError = 0, accheadingrror = 0;
-    while (fabs(avgTicks) < fabs(target)) {
+    while (fabs(avgTicks) < fabs(target + ((target > 0) ? -5 : 5))) {
+        controller.print(2,2,"%3f",avgTicks);
+        //controller.print(2,2,"%3f",Get_Heading());
         // Calculate PID output
         double currentPower = error * kP + accumulativeError * kI + (error - prevError) * kD;
         currentPower = std::clamp(currentPower,-maxSpeed,maxSpeed);// Constrain power within max
@@ -285,9 +287,9 @@
     Reset_Motor_Position();
 
     // Constants and initial calculations
-    const double target = inches *1340/24;
-//(inches / (Wheel_Diameter * M_PI)) * 360 * 1.1;
-    const double Max = 127; //Max speed for motors
+    const double target = inches *  StraightTPI/24;
+    //(((inches / (Wheel_Diameter * M_PI)) * 360 )/ Gear_Ratio)/ 1.1;
+    const double Max = 100; //Max speed for motors
 
     // PID constants, adjust or utilize as passed from the structure
     double kP = variable.kP * (inches < 12 ? 2 : 1);
@@ -295,12 +297,14 @@
 
     // P constants for heading correction
     double kP_heading = variable.kA;
+    double kI_heading = variable.kAI;
 
     // Initialize encoder readings and PID variables
     double lAvgTicks = 0, rAvgTicks = 0, avgTicks = 0;
     double error = 0, prevError = 0, accumulativeError = 0;
-    double headingError = 0;
+    double headingError = 0, accheadingrror = 0;
     while (fabs(avgTicks) < fabs(target)) {
+        controller.print(2,2,"%3f",avgTicks);
         // Calculate PID output
         double currentPower = error * kP + accumulativeError * kI + (error - prevError) * kD;
         currentPower = std::clamp(currentPower,-maxSpeed,maxSpeed);// Constrain power within max
@@ -309,7 +313,7 @@
         headingError = fmod((Target_Heading-Get_Heading()+540.0), 360.0)-180.0;
 
         // Simple proportional correction for heading
-        double headingCorrection = headingError * kP_heading;
+        double headingCorrection = headingError * kP_heading + accheadingrror * kI_heading;
 
         // Apply heading correction to motor powers
         double lPower = currentPower + headingCorrection;
@@ -332,7 +336,8 @@
         // Reset accumulative error under specific conditions
         if(fabs(error) < 0.5 || fabs(error) > 150) accumulativeError = 0;
         else accumulativeError += error;
-
+        if(fabs(headingError) < 0.2 || fabs(headingError) > 20) accheadingrror = 0;
+        else accheadingrror += headingError;
         pros::delay(10); // Delay to save resources
     }
     pros::delay(100);
@@ -360,11 +365,11 @@
 
         // Apply passive power if needed
         if (variable.Passive_Power) {
-            targetSpeed = (targetSpeed > 0) ? fmax(targetSpeed, 17) : fmin(targetSpeed, -17);
+            targetSpeed = (targetSpeed > 0) ? targetSpeed + 14 : targetSpeed - 14;
         }
         targetSpeed = std::clamp(targetSpeed,-maxTurnSpeed,maxTurnSpeed);
         // Adjust drivetrain speed based on the sign of the angle
-        Set_Drivetrain_Vel((shortestAngle < 0) ? -targetSpeed : targetSpeed, (shortestAngle < 0) ? targetSpeed : -targetSpeed);
+        Set_Drivetrain((shortestAngle < 0) ? -targetSpeed : targetSpeed, (shortestAngle < 0) ? targetSpeed : -targetSpeed);
 
         // Update for next iteration
         prevShortestAngle = shortestAngle;
@@ -373,7 +378,7 @@
         totalAccumulatedAngleError += fabs(shortestAngle);
 
         // Reset total accumulated angle error if too far or it overshoots to prevent integral windup
-        if (fabs(shortestAngle) < 0.5 || fabs(shortestAngle) > 15) {
+        if (fabs(shortestAngle) < 0.1 || fabs(shortestAngle) > 15) {
             totalAccumulatedAngleError = 0;
         }
 
@@ -381,7 +386,7 @@
         double currentSpeed = fabs((Get_RPM('l') + Get_RPM('r')) / 2);
         controller.print(2,2,"%3f",Get_Heading());
         controller.print(1,2,"%3f",currentSpeed);
-        if (fabs(shortestAngle) < 1.2 & currentSpeed < 5) {
+        if (fabs(shortestAngle) < 2.5 & currentSpeed < 5) {
             Reset_Motor_Position();
             pros::delay(50);
             return;

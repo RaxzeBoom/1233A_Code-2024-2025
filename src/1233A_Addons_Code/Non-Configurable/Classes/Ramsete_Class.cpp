@@ -22,8 +22,8 @@ extern bool TrackerOn;
         double V = Vd * cos(AngleError) + k * xError;
         double W = Wd + k * AngleError + ((b* Vd * sin(AngleError) * yError)/AngleError);
         // Find Velocity
-        double linearMotorVelcity = V/dTrain->Wheel_Diameter;
-        double angularMotorVelcity = W/dTrain->Wheel_Diameter;
+        double linearMotorVelcity = V/3.25;
+        double angularMotorVelcity = W/3.25;
         // Find side outputs
         double left = linearMotorVelcity + angularMotorVelcity;
         double right = linearMotorVelcity - angularMotorVelcity;
