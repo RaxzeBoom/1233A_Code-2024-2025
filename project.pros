@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "1233A_Code-2024-2025",
+    "project_name": "1233A BLUE NEG",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -397,7 +397,8 @@
       }
     },
     "upload_options": {
-      "icon": "X"
+      "icon": "X",
+      "slot": 4
     },
     "use_early_access": true
   }

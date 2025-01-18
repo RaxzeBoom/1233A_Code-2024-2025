@@ -230,7 +230,7 @@
     const double Max = 127; //Max speed for motors
 
     // PID constants, adjust or utilize as passed from the structure
-    double kP = variable.kP * (inches < 12 ? 2 : 1);
+    double kP = variable.kP * (inches <= 14 ? 2 : 1);
     double kI = variable.kI, kD = variable.kD;
 
     // P constants for heading correction
@@ -418,11 +418,11 @@ void Drivetrain::Turn(double angle, double maxTurnSpeed, Turn_PID_Var variable ,
 
         // Apply passive power if needed
         if (variable.Passive_Power) {
-            targetSpeed = (targetSpeed > 0) ? fmax(targetSpeed, 17) : fmin(targetSpeed, -17);
+            targetSpeed = (targetSpeed > 0) ? targetSpeed + 14 : targetSpeed - 14;
         }
-
+        targetSpeed = std::clamp(targetSpeed,-maxTurnSpeed,maxTurnSpeed);
         // Adjust drivetrain speed based on the sign of the angle
-        Set_Drivetrain_Vel((shortestAngle < 0) ? -targetSpeed : targetSpeed, (shortestAngle < 0) ? targetSpeed : -targetSpeed);
+        Set_Drivetrain((shortestAngle < 0) ? -targetSpeed : targetSpeed, (shortestAngle < 0) ? targetSpeed : -targetSpeed);
 
         // Update for next iteration
         prevShortestAngle = shortestAngle;
@@ -431,7 +431,7 @@ void Drivetrain::Turn(double angle, double maxTurnSpeed, Turn_PID_Var variable ,
         totalAccumulatedAngleError += fabs(shortestAngle);
 
         // Reset total accumulated angle error if too far or it overshoots to prevent integral windup
-        if (fabs(shortestAngle) < 0.5 || fabs(shortestAngle) > 15) {
+        if (fabs(shortestAngle) < 0.1 || fabs(shortestAngle) > 15) {
             totalAccumulatedAngleError = 0;
         }
 

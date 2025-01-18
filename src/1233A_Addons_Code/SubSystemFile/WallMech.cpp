@@ -76,7 +76,7 @@ void WallMech_PID()
                 output = -fabs(output);
             }
             */
-            output = std::clamp(output,-100.0,100.0);
+            output = std::clamp(output,-55.0,55.0);
             SetWallMech(output);
 
             //controller.print(2,2,"%3f",error);
