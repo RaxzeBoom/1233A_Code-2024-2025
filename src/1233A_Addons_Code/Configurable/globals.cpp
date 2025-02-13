@@ -2,16 +2,16 @@
 //Controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 //Drive Motor Configation
-pros::Motor Intake(-7,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
-pros::MotorGroup WallMech({16, -6},pros::v5::MotorGear::green,pros::v5::MotorUnits::degrees);
-pros::Rotation WallMechRotation(17);
+pros::Motor Intake(-1,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::MotorGroup WallMech({17, -15},pros::v5::MotorGear::green,pros::v5::MotorUnits::degrees);
+pros::Rotation WallMechRotation(20);
 Drivetrain drivetrain(
 /*Left Motors Ports*/
-    {-8    ,9    ,-10} ,
+    {-2    ,3    ,-14} ,
 /*Right Motors Ports*/
-    {18      ,19     ,-20} ,
+    {18      ,19     ,-21} ,
 /*IMUs Ports*/ 
-    {5} , 
+    {13} , 
 /*Straight TPI*/
     1110.8+50
 );
@@ -55,7 +55,7 @@ Pnumatics IntakeLift(
 );
 Pnumatics Doinker(
     /*Port*/
-    {'C'},
+    {'H'},
     /*Controller Button For Activation*/
     pros::E_CONTROLLER_DIGITAL_DOWN,
     /*Reverse*/

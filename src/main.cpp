@@ -53,6 +53,7 @@ void IntakeUnstuckTask(void* param)
 			}
 			pros::delay(20);
 		}
+		pros::delay(20);
 	}
 	
 }
@@ -82,8 +83,8 @@ void competition_initialize() {}
  * Runs the user autonomous code
  */ 
 void autonomous() {
- //Run_Auto();
-    Auton_10();
+ 	Run_Auto();
+	//Auton_5();
 	  
 } 
 
