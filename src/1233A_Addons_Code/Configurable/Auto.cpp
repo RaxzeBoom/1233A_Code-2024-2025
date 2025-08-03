@@ -57,7 +57,6 @@ Drivetrain::Swing_PID_Var Alfa_Swing(
 extern int Auto_Num;
 extern int Change;
 extern bool TrackerOn;
-extern bool Unstuck;
 
 Auto_Info Auto_Programs[] = {
     //  Name  ,   Display Name  ,  Description  ,  Auto that should be ran
@@ -548,7 +547,6 @@ void Auton_13()
     //------------------
     drivetrain.driveDistance(8,100,Alfa_Straight);
     WallMech_Target = DriverWallMechAngleLoad;
-    Unstuck = false;
     drivetrain.Turn(180,100,Alfa_Turn, 5, 9);
     drivetrain.driveDistance(55,100,Alfa_Straight);
     StopIntake();

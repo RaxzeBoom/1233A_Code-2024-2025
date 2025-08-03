@@ -3,7 +3,7 @@
 int Driver_Intake_Speed = 127;
 
 //WallMech Config
-int Driver_WallMech_Speed = 110;
+int Driver_WallMech_Speed = 127;
 double DriverWallMechAngleRest = 360;
 double DriverWallMechAngleLoad = 323;
 double DriverWallMechAngleShoot = 200;
