@@ -2,7 +2,8 @@
 //Controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 //Drive Motor Configation
-pros::Motor Intake(-5,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::Motor Intake(5,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::Motor TopRoller(4,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
 pros::Motor WallMech(-15,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
 pros::Optical colorSort(9);
 pros::Rotation WallMechRotation(20);

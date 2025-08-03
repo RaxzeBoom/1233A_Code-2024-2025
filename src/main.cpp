@@ -64,14 +64,17 @@ void autonomous() {
 //extern pros::Task RPM_Task;
 void opcontrol() {
 	Intake.set_brake_mode(MOTOR_BRAKE_COAST);
+	WallMech.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+
 	TrackerOn = false;
 	drivetrain.Change_Brake_Type(Drivetrain::COAST);
-	WallMech.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+	
 	while (true) {
 		
 		drivetrain.Driver_Control();
 		Driver_Intake();
 		Driver_WallMech();
+		Driver_TopRoller();
 		IntakeLift.Control();
 		Mogo.Control();
 		Doinker.Control();
