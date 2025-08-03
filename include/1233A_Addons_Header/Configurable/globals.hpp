@@ -3,7 +3,8 @@
 extern pros::Controller controller;
 //More motor setup here
 extern pros::Motor Intake;
-extern pros::MotorGroup WallMech;
+extern pros::Motor WallMech;
+extern pros::Optical colorSort;
 extern pros::Rotation WallMechRotation;
 //Class Setups here
 extern Drivetrain drivetrain;

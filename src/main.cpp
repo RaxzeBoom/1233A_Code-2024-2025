@@ -1,5 +1,6 @@
 #include "main.h"
 extern bool WallMechPid;
+bool DriverintakeOn = true;
 bool TrackerOn = true;
 extern bool Toggle_GUI;
 void UI_Touch() {
@@ -57,16 +58,83 @@ void IntakeUnstuckTask(void* param)
 	}
 	
 }
+
+bool colorSortState = false;
+bool colorType = false; //false = blue true = red
+bool NO = true;
+void colorSortTask(void* param)
+{
+	//Color Sort Setting
+	//---------------------------------------------------------//
+	const double red = 10;
+	const double blue = 220;
+	const double colorDiff = 10;
+	const double senseDelay = 15; // in miliseconds
+	const double speedChange = -45;
+	const double changeDelay = 130;
+	double color = 0;
+	//---------------------------------------------------------//
+	while (true)
+	{
+		while (colorSortState)
+		{
+			controller.clear();
+			controller.print(2,2,"%3f",colorSort.get_hue());
+			color = colorSort.get_hue();
+			//Blue
+			if(NO)
+			{
+			if(!colorType)
+			{
+				controller.print(1,2,"keep blue");
+				if((red - colorDiff) < color & color < (red + colorDiff))
+				{
+					DriverintakeOn = false;
+					SetIntake(0);
+					pros::delay(senseDelay);
+					SetIntake(speedChange);
+					pros::delay(changeDelay);
+					SetIntake(127);
+					DriverintakeOn = true;
+				}
+			}
+			//Red
+			if(colorType)
+			{
+				controller.print(1,2,"keep red");
+				if((blue - colorDiff) < color & color < (blue + colorDiff))
+				{
+					DriverintakeOn = false;
+					SetIntake(0);
+					pros::delay(senseDelay);
+					SetIntake(speedChange);
+					pros::delay(changeDelay);
+					SetIntake(127);
+					DriverintakeOn = true;
+				}
+			}
+		}
+		else{
+			controller.print(1,2,"No");
+		}
+			
+		}
+		pros::delay(20);
+	}
+	
+}
 void initialize() {
 	
 	pros::delay(300); 
 	Start_UI();
+	colorSort.set_led_pwm(100);
 	drivetrain.Initialize();
 	WallMechRotation.reset_position();
 	pros::screen::touch_callback(UI_Touch, TOUCH_PRESSED);
 	//pros::Task  Odem_Update(GUI);
 	pros::Task  WMPT(WallMechPidTask);
 	pros::Task  UST(IntakeUnstuckTask);
+	pros::Task  CSST(colorSortTask);
 }
 
 /**
@@ -84,7 +152,7 @@ void competition_initialize() {}
  */ 
 void autonomous() {
  	Run_Auto();
-	//Auton_5();
+    //Auton_13();
 	  
 } 
 
@@ -100,11 +168,12 @@ void opcontrol() {
 	Intake.set_brake_mode(MOTOR_BRAKE_COAST);
 	TrackerOn = true;
 	drivetrain.Change_Brake_Type(Drivetrain::COAST);
-	WallMech.set_brake_mode(MOTOR_BRAKE_BRAKE);
+	WallMech.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 	while (true) {
-		controller.print(2,2,"%3f",Intake.get_efficiency());
+		
 		drivetrain.Driver_Control();
-		Driver_Intake();
+		//Driver_Intake();
+		SetIntake(100);
 		Driver_WallMech();
 		Driver_WmPID();
 		IntakeLift.Control();

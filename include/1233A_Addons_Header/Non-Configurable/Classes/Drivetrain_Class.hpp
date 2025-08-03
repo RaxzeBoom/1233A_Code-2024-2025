@@ -36,6 +36,7 @@ class Drivetrain {
     std::vector<pros::Motor> leftMotors;
     std::vector<pros::Motor> rightMotors;
     std::vector<pros::IMU> IMU_List;
+    int timeOutLenght = 100000;
     double current_Max_RPM;
     double Base_Width;
     double StraightTPI;

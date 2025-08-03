@@ -223,6 +223,8 @@
     void Drivetrain::driveDistance(double inches, double maxSpeed, Straight_PID_Var variable) {
     Change_Brake_Type(BRAKE);
     Reset_Motor_Position();
+    //Gets Time for Timeout
+    int startTime = pros::millis();
 
     // Constants and initial calculations
     const double target = inches *  StraightTPI/24;
@@ -277,6 +279,10 @@
         else accumulativeError += error;
         if(fabs(headingError) < 0.2 || fabs(headingError) > 20) accheadingrror = 0;
         else accheadingrror += headingError;
+        if((pros::millis() - startTime) > timeOutLenght)
+        {
+            return;
+        }
         pros::delay(10); // Delay to save resources
     }
     pros::delay(100);

@@ -4,34 +4,35 @@ extern double WallMechPidVar[3];
 extern double DriverWallMechAngleRest;
 extern double DriverWallMechAngleLoad;
 extern double DriverWallMechAngleShoot;
+extern double DriverWallMechAngleStake;
 double WallMech_Target = DriverWallMechAngleRest;
-bool WallMechPid = true;
+bool WallMechPid = false;
 void SetWallMech(int power)
 {
     WallMech.move(power);
 }
 void StopWallMech()
 {
-    WallMech.move(0);
+    WallMech.brake();
 }
 void Driver_WallMech() {
     int WallMechpower = 0;
-    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
         WallMechpower = Driver_WallMech_Speed;
         WallMechPid = false;
-        if(!WallMechPid == true)
+        if(WallMechPid == false)
         {
         SetWallMech(WallMechpower);
         }
     }
-    else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+    else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
         WallMechpower = Driver_WallMech_Speed*-1;
         WallMechPid = false;
-        if(!WallMechPid == true)
+        if(WallMechPid == false)
         {
         SetWallMech(WallMechpower);
         }
-    }else if(!WallMechPid == true)
+    }else if(WallMechPid == false)
     {
         StopWallMech();
     }
@@ -53,6 +54,11 @@ void Driver_WmPID(){
         WallMech_Target = DriverWallMechAngleShoot;
         WallMechPid = true;
     }
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+    {
+        WallMech_Target = DriverWallMechAngleStake;
+        WallMechPid = true;
+    }
 }
 void WallMech_PID()
 {
@@ -66,11 +72,12 @@ void WallMech_PID()
 
             double output = error * WallMechPidVar[0];
             double pos = WallMechRotation.get_angle()/100;
-            /*
-            if((pos < 210 & pos > 90) & !(WallMech_Target < 220 & WallMech_Target > 90))
+            
+            if((pos < 210 & pos > 130) & !(WallMech_Target < 210 & WallMech_Target > 130))
             {
-                output = fabs(output);
+                output = -fabs(output);
             }
+            /*
             if(((pos < 360 & pos > 300) || (pos < 80 & pos > 0)) & !((WallMech_Target < 360 & WallMech_Target > 300) || (WallMech_Target < 80 & WallMech_Target > 0)))
             {
                 output = -fabs(output);

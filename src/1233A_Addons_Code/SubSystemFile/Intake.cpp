@@ -1,5 +1,7 @@
 #include "main.h"
 extern int Driver_Intake_Speed;
+extern bool DriverintakeOn; 
+
 void SetIntake(int power)
 {
     Intake.move(power);
@@ -16,5 +18,8 @@ void Driver_Intake() {
     else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
         Intakepower = Driver_Intake_Speed*-1;
     }
+    if(DriverintakeOn)
+    {
     SetIntake(Intakepower);
+    }
 }
