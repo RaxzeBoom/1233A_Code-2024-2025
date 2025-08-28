@@ -39,7 +39,7 @@
     void Drivetrain::Driver_Control()
     {
         if(Drivetype == false){Tank_Control();} else{Arcade_Control();}
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) & false)
         {
           if(Drivetype == false) {Drivetype = true;}
           else {Drivetype = false;}

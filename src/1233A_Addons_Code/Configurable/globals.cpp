@@ -2,11 +2,10 @@
 //Controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 //Drive Motor Configation
-pros::Motor Intake(5,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::Motor FrontRoller(5,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::Motor TankRoller(-15,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
 pros::Motor TopRoller(4,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
-pros::Motor WallMech(-15,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
-pros::Optical colorSort(9);
-pros::Rotation WallMechRotation(20);
+
 Drivetrain drivetrain(
 /*Left Motors Ports*/
     {-2    ,-3    ,-14} ,
@@ -39,7 +38,7 @@ Ramsete RamseteController(
 /*Odometry*/
     &Odom
 );
-Pnumatics Mogo(
+Pnumatics MatchLoad(
     /*Port*/
     {'A'},
     /*Controller Button For Activation*/
@@ -47,19 +46,11 @@ Pnumatics Mogo(
     /*Reverse*/
     false
 );
-Pnumatics IntakeLift(
+Pnumatics MiddleBlock(
     /*Port*/
-    {'C'},
+    {'B'},
     /*Controller Button For Activation*/
-    pros::E_CONTROLLER_DIGITAL_A,
-    /*Reverse*/
-    false
-);
-Pnumatics Doinker(
-    /*Port*/
-    {'H'},
-    /*Controller Button For Activation*/
-    pros::E_CONTROLLER_DIGITAL_B,
+    pros::E_CONTROLLER_DIGITAL_X,
     /*Reverse*/
     false
 );

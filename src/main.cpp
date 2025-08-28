@@ -15,25 +15,15 @@ void GUI(void* param)
 	}
 	Start_GUI();
 }
-void WallMechPidTask(void* param)
-{
-	while (true)
-	{
-		WallMech_PID();
-	}
-	
-}
+
 
 void initialize() {
 	
 	pros::delay(300); 
 	Start_UI();
-	colorSort.set_led_pwm(100);
 	drivetrain.Initialize();
-	WallMechRotation.reset_position();
 	pros::screen::touch_callback(UI_Touch, TOUCH_PRESSED);
 	//pros::Task  Odem_Update(GUI);
-	pros::Task  WMPT(WallMechPidTask);
 }
 
 /**
@@ -63,8 +53,9 @@ void autonomous() {
 
 //extern pros::Task RPM_Task;
 void opcontrol() {
-	Intake.set_brake_mode(MOTOR_BRAKE_COAST);
-	WallMech.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+	FrontRoller.set_brake_mode(MOTOR_BRAKE_COAST);
+	TankRoller.set_brake_mode(MOTOR_BRAKE_COAST);
+	TopRoller.set_brake_mode(MOTOR_BRAKE_COAST);
 
 	TrackerOn = false;
 	drivetrain.Change_Brake_Type(Drivetrain::COAST);
@@ -72,12 +63,10 @@ void opcontrol() {
 	while (true) {
 		
 		drivetrain.Driver_Control();
+		DriverIntakeModeControl();
 		Driver_Intake();
-		Driver_WallMech();
-		Driver_TopRoller();
-		IntakeLift.Control();
-		Mogo.Control();
-		Doinker.Control();
+		
+		MatchLoad.Control();
 		pros::delay(20);
 
 	}

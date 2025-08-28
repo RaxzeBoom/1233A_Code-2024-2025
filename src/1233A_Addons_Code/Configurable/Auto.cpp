@@ -1,5 +1,4 @@
 #include "main.h"
-#include "1233A_Addons_Header/SubSystemHeader/WallMech.hpp"
 extern double WallMech_Target;
 #include <string.h>
 Drivetrain::Straight_PID_Var Alfa_Straight(
@@ -227,40 +226,7 @@ extern bool WallMechPid;
 //Positive Side
 void Auton_1()
 {
-    WallMech_Target = DriverWallMechAngleLoad-35;
-    pros::delay(200);
-    SetIntake(127);
-    drivetrain.driveDistance(25,127,Beta_Straight);
-    drivetrain.timeOutLenght = 200000;
-    StopIntake();
-    pros::delay(100);
-    drivetrain.Turn(-60,100,Beta_Turn, 5, 9);
-    drivetrain.driveDistance(-17,90,Alfa_Straight);
-    Mogo.Toggle();
-    pros::delay(250);
-    SetIntake(127);
-    pros::delay(750);
-    StopIntake();
-    WallMech_Target = DriverWallMechAngleLoad-3;
-    pros::delay(400);
-    SetIntake(-127);
-    pros::delay(400);
-    WallMechPid = false;
-    SetWallMech(-100);
-    pros::delay(200);
-    SetIntake(127);
-    pros::delay(850);
-    StopWallMech();
-    drivetrain.Turn(-110,80,Alfa_Turn, 5, 9);
-    WallMechPid = true;
-    drivetrain.driveDistance(30,100,Alfa_Straight);
-    WallMech_Target = DriverWallMechAngleLoad-35;
-    pros::delay(500);
-    drivetrain.driveDistance(127,850);
-    drivetrain.Change_Brake_Type(Drivetrain::COAST);
-    drivetrain.Turn(-110,80,Alfa_Turn, 5, 9);
-    WallMech_Target = DriverWallMechAngleLoad - 3;
-    drivetrain.driveDistance(-127,350);
+   
     
 
 
@@ -268,40 +234,7 @@ void Auton_1()
 
 void Auton_2()
 {
-    WallMech_Target = DriverWallMechAngleLoad-35;
-    pros::delay(200);
-    SetIntake(127);
-    drivetrain.driveDistance(25,127,Beta_Straight);
-    drivetrain.timeOutLenght = 200000;
-    StopIntake();
-    pros::delay(100);
-    drivetrain.Turn(-60,100,Beta_Turn, 5, 9);
-    drivetrain.driveDistance(-17,90,Alfa_Straight);
-    Mogo.Toggle();
-    pros::delay(250);
-    SetIntake(127);
-    pros::delay(750);
-    StopIntake();
-    WallMech_Target = DriverWallMechAngleLoad-3;
-    pros::delay(400);
-    SetIntake(-127);
-    pros::delay(400);
-    WallMechPid = false;
-    SetWallMech(-100);
-    pros::delay(200);
-    SetIntake(127);
-    pros::delay(850);
-    StopWallMech();
-    drivetrain.Turn(-110,80,Alfa_Turn, 5, 9);
-    WallMechPid = true;
-    drivetrain.driveDistance(30,100,Alfa_Straight);
-    WallMech_Target = DriverWallMechAngleLoad-35;
-    pros::delay(500);
-    drivetrain.driveDistance(127,850);
-    drivetrain.Change_Brake_Type(Drivetrain::COAST);
-    drivetrain.Turn(-110,80,Alfa_Turn, 5, 9);
-    WallMech_Target = DriverWallMechAngleLoad - 3;
-    drivetrain.driveDistance(-127,4000);
+    
     
 }
 void Auton_3()
@@ -312,30 +245,7 @@ void Auton_3()
 //Negitive Side
 void Auton_4()
 {
-    drivetrain.driveDistance(5,127,Alfa_Straight);
-    WallMech_Target = DriverWallMechAngleStake;
-    pros::delay(1000);
-    drivetrain.driveDistance(-33.5,80,Alfa_Straight);
-    Mogo.Toggle();
-    WallMech_Target = DriverWallMechAngleShoot;
-    pros::delay(200);
-    WallMech_Target = DriverWallMechAngleRest;
-    drivetrain.Turn(-117,80,Alfa_Turn, 5, 9);
-    SetIntake(127);
-    drivetrain.driveDistance(14,110,Alfa_Straight);
-    drivetrain.Turn(-198,80,Alfa_Turn, 5, 9);
-    pros::delay(100);
-    drivetrain.driveDistance(12,90,Alfa_Straight);
-    pros::delay(100);
-    drivetrain.driveDistance(-8,100,Alfa_Straight);
-    drivetrain.Turn(-175,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(11,90,Alfa_Straight);
-    pros::delay(200);
-    drivetrain.driveDistance(-9,100,Alfa_Straight);
-    drivetrain.Turn(-290,90,Alfa_Turn, 5, 9);
-    pros::delay(650);
-    WallMech_Target = DriverWallMechAngleShoot - 20;
-    drivetrain.driveDistance(45,90,Alfa_Straight);
+   
 }
 void Auton_5()
 {
@@ -350,96 +260,12 @@ void Auton_6()
 //Start of postive sides
 void Auton_7()
 {
-    WallMech_Target = DriverWallMechAngleLoad-35;
-    pros::delay(200);
-    SetIntake(90);
-    Doinker.Toggle();
-    drivetrain.timeOutLenght = 1300;
-    drivetrain.driveDistance(30,127,Beta_Straight);
-    Doinker.Toggle();
-    drivetrain.timeOutLenght = 200000;
-    StopIntake();
-    pros::delay(100);
-    drivetrain.timeOutLenght = 1000;
-    drivetrain.driveDistance(-7,90,Alfa_Straight);
-    drivetrain.timeOutLenght = 200000;
-    drivetrain.Turn(60,100,Beta_Turn, 5, 9);
-    Doinker.Toggle();
-    drivetrain.driveDistance(-15,90,Alfa_Straight);
-    Doinker.Toggle();
-    Mogo.Toggle();
-    pros::delay(250);
-    SetIntake(127);
-    pros::delay(750);
-    StopIntake();
-    WallMech_Target = DriverWallMechAngleLoad-3;
-    pros::delay(400);
-    SetIntake(-127);
-    pros::delay(400);
-    WallMechPid = false;
-    SetWallMech(-100);
-    pros::delay(200);
-    SetIntake(127);
-    pros::delay(850);
-    StopWallMech();
-    WallMechPid = true;
-    drivetrain.Turn(112,80,Alfa_Turn, 5, 9);
-    WallMech_Target = DriverWallMechAngleLoad;
-    drivetrain.driveDistance(30,100,Alfa_Straight);
-    WallMech_Target = DriverWallMechAngleLoad-35;
-    pros::delay(500);
-    drivetrain.driveDistance(127,850);
-    drivetrain.Change_Brake_Type(Drivetrain::COAST);
-    drivetrain.Turn(112,80,Alfa_Turn, 5, 9);
-    WallMech_Target = DriverWallMechAngleLoad - 3;
-    drivetrain.driveDistance(-127,350);
+    
 
 }
 void Auton_8()
 {   
-    WallMech_Target = DriverWallMechAngleLoad-35;
-    pros::delay(200);
-    SetIntake(90);
-    Doinker.Toggle();
-    drivetrain.timeOutLenght = 1300;
-    drivetrain.driveDistance(30,127,Beta_Straight);
-    Doinker.Toggle();
-    drivetrain.timeOutLenght = 200000;
-    StopIntake();
-    pros::delay(100);
-    drivetrain.timeOutLenght = 1000;
-    drivetrain.driveDistance(-7,90,Alfa_Straight);
-    drivetrain.timeOutLenght = 200000;
-    drivetrain.Turn(60,100,Beta_Turn, 5, 9);
-    Doinker.Toggle();
-    drivetrain.driveDistance(-15,90,Alfa_Straight);
-    Doinker.Toggle();
-    Mogo.Toggle();
-    pros::delay(250);
-    SetIntake(127);
-    pros::delay(750);
-    StopIntake();
-    WallMech_Target = DriverWallMechAngleLoad-3;
-    pros::delay(400);
-    SetIntake(-127);
-    pros::delay(400);
-    WallMechPid = false;
-    SetWallMech(-100);
-    pros::delay(200);
-    SetIntake(127);
-    pros::delay(850);
-    StopWallMech();
-    WallMechPid = true;
-    drivetrain.Turn(112,80,Alfa_Turn, 5, 9);
-    WallMech_Target = DriverWallMechAngleLoad;
-    drivetrain.driveDistance(30,100,Alfa_Straight);
-    WallMech_Target = DriverWallMechAngleLoad-35;
-    pros::delay(500);
-    drivetrain.driveDistance(127,850);
-    drivetrain.Change_Brake_Type(Drivetrain::COAST);
-    drivetrain.Turn(112,80,Alfa_Turn, 5, 9);
-    WallMech_Target = DriverWallMechAngleLoad - 3;
-    drivetrain.driveDistance(-127,4000);
+    
 }
 void Auton_9()
 {
@@ -448,57 +274,11 @@ void Auton_9()
 //Start of negitive sides
 void Auton_10()
 {
-    drivetrain.driveDistance(5,127,Alfa_Straight);
-    WallMech_Target = DriverWallMechAngleStake;
-    pros::delay(1000);
-    drivetrain.driveDistance(-33.5,80,Alfa_Straight);
-    Mogo.Toggle();
-    WallMech_Target = DriverWallMechAngleShoot;
-    pros::delay(200);
-    WallMech_Target = DriverWallMechAngleRest;
-    drivetrain.Turn(117,80,Alfa_Turn, 5, 9);
-    SetIntake(127);
-    drivetrain.driveDistance(14,110,Alfa_Straight);
-    drivetrain.Turn(198,80,Alfa_Turn, 5, 9);
-    pros::delay(100);
-    drivetrain.driveDistance(12,90,Alfa_Straight);
-    pros::delay(100);
-    drivetrain.driveDistance(-8,100,Alfa_Straight);
-    drivetrain.Turn(175,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(11,90,Alfa_Straight);
-    pros::delay(200);
-    drivetrain.driveDistance(-9,100,Alfa_Straight);
-    drivetrain.Turn(290,90,Alfa_Turn, 5, 9);
-    pros::delay(650);
-    WallMech_Target = DriverWallMechAngleShoot - 20;
-    drivetrain.driveDistance(45,90,Alfa_Straight);
+    
 }
 void Auton_11()
 {
-    drivetrain.driveDistance(5,127,Alfa_Straight);
-    WallMech_Target = DriverWallMechAngleStake;
-    pros::delay(1000);
-    drivetrain.driveDistance(-33.5,80,Alfa_Straight);
-    Mogo.Toggle();
-    WallMech_Target = DriverWallMechAngleShoot;
-    pros::delay(200);
-    WallMech_Target = DriverWallMechAngleRest;
-    drivetrain.Turn(117,80,Alfa_Turn, 5, 9);
-    SetIntake(127);
-    drivetrain.driveDistance(14,110,Alfa_Straight);
-    drivetrain.Turn(198,80,Alfa_Turn, 5, 9);
-    pros::delay(100);
-    drivetrain.driveDistance(12,90,Alfa_Straight);
-    pros::delay(100);
-    drivetrain.driveDistance(-8,100,Alfa_Straight);
-    drivetrain.Turn(175,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(11,90,Alfa_Straight);
-    pros::delay(200);
-    drivetrain.driveDistance(-9,100,Alfa_Straight);
-    drivetrain.Turn(290,90,Alfa_Turn, 5, 9);
-    pros::delay(650);
-    WallMech_Target = DriverWallMechAngleShoot - 20;
-    drivetrain.driveDistance(45,90,Alfa_Straight);
+    
 
 
 }
@@ -509,142 +289,13 @@ void Auton_12()
 //Start of Other programs
 void Auton_13()
 {
-    WallMech_Target = DriverWallMechAngleStake;
-    pros::delay(200);
-    pros::delay(300);
-    drivetrain.driveDistance(-7,100,Alfa_Straight);
-    drivetrain.timeOutLenght = 2500;
-    WallMech_Target = DriverWallMechAngleShoot;
-    drivetrain.Turn(80,50,Alfa_Turn);
-    drivetrain.driveDistance(-15,80,Alfa_Straight);
-    pros::delay(100);
-    Mogo.Toggle();
-    drivetrain.Turn (270,100,Alfa_Turn, 5, 9);
-    pros::delay(100);
-    SetIntake(127);
-    drivetrain.driveDistance(35,85,Alfa_Straight);
-    drivetrain.driveDistance(-12,100,Alfa_Straight);
-    drivetrain.Turn(0,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(10,100,Alfa_Straight);
-    drivetrain.driveDistance(-12,100,Alfa_Straight);
-    drivetrain.Turn(135,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(-18,100,Alfa_Straight);
-    Mogo.Toggle();
-    drivetrain.driveDistance(9,100,Alfa_Straight);
-    drivetrain.Turn(270,100,Alfa_Turn);
-    //---------------------------------------------
-    drivetrain.driveDistance(-68,80,Alfa_Straight);
-    Mogo.Toggle();
-    drivetrain.Turn(85,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(33,85,Alfa_Straight);
-    drivetrain.driveDistance(-15,100,Alfa_Straight);
-    drivetrain.Turn(0,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(12.5,100,Alfa_Straight);
-    drivetrain.driveDistance(-12,100,Alfa_Straight);
-    drivetrain.Turn(-135,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(-18,100,Alfa_Straight);
-    Mogo.Toggle();
-    //------------------
-    drivetrain.driveDistance(8,100,Alfa_Straight);
-    WallMech_Target = DriverWallMechAngleLoad;
-    drivetrain.Turn(180,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(55,100,Alfa_Straight);
-    StopIntake();
-    WallMech_Target = DriverWallMechAngleShoot;
-    drivetrain.Turn(36,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(-54,100,Alfa_Straight);
-    drivetrain.Turn(100,100,Alfa_Turn, 5, 9);
-    drivetrain.driveDistance(58,100,Alfa_Straight);
-    //-----------
-    drivetrain.driveDistance(-56,100,Alfa_Straight);
-    drivetrain.Turn(180,100,Alfa_Turn);
-    drivetrain.driveDistance(6.5,100,Alfa_Straight);
-    WallMech_Target = DriverWallMechAngleStake;
-    drivetrain.driveDistance(-4,100,Alfa_Straight);
-    drivetrain.Turn(-110,100,Alfa_Turn);
-    WallMech_Target = DriverWallMechAngleShoot;
-    drivetrain.driveDistance(64,100,Alfa_Straight);
-    drivetrain.Turn(-140,100,Alfa_Turn);
-    drivetrain.timeOutLenght = 5000;
-    drivetrain.driveDistance(-80,100,Alfa_Straight);
-    
-    
-
-    
-
-    
-    
-
-
-    
-    
-
-    
+   
 }
 //Backup
 void Auton_14()
 {
 
-    //Full Goal Close Side SKills
-    WallMech_Target = DriverWallMechAngleStake;
-    pros::delay(200);
-    pros::delay(300);
-    drivetrain.driveDistance(-7,100,Alfa_Straight);
-    drivetrain.timeOutLenght = 2500;
-    WallMech_Target = DriverWallMechAngleShoot;
-    drivetrain.Turn(80,50,Alfa_Turn);
-    drivetrain.driveDistance(-15,80,Alfa_Straight);
-    pros::delay(100);
-    Mogo.Toggle();
-    drivetrain.driveDistance(4,80,Alfa_Straight);
-    drivetrain.Turn(208,80,Alfa_Turn, 9 , 5);
-    SetIntake(127);
-    drivetrain.driveDistance(20,80,Alfa_Straight);  
-    pros::delay(400);
-    drivetrain.Target_Heading = 225;
-    drivetrain.driveDistance(34,80,Alfa_Straight);  
-    pros::delay(200);
-    SetIntake(127);
-    drivetrain.Turn(270,80,Alfa_Turn, 9 , 5);
-    drivetrain.driveDistance(10,65,Alfa_Straight);
-    drivetrain.driveDistance(-12,100,Alfa_Straight);
-    drivetrain.Turn(0,100,Alfa_Turn, 9 , 5);
-    drivetrain.driveDistance(61,65,Alfa_Straight);
-    drivetrain.driveDistance(-14,100,Alfa_Straight);
-    drivetrain.Turn(-90,75,Alfa_Turn, 9 , 5);
-    drivetrain.driveDistance(11,100,Alfa_Straight);
-    drivetrain.driveDistance(-13,100,Alfa_Straight);
-    drivetrain.Turn(-225,100,Alfa_Turn, 9 , 5);
-    drivetrain.driveDistance(-20,100,Alfa_Straight);
-    Mogo.Toggle();
-    drivetrain.driveDistance(7,100,Alfa_Straight);
-    drivetrain.Turn(-90,90,Alfa_Turn, 9 , 5);
-    SetIntake(0);
-    drivetrain.driveDistance(-66,90,Alfa_Straight);
-    //-----------------//
-    Mogo.Toggle();
-    drivetrain.driveDistance(4,80,Alfa_Straight);
-    drivetrain.Turn(-208,80,Alfa_Turn, 9 , 5);
-    SetIntake(127);
-    drivetrain.driveDistance(20,80,Alfa_Straight);  
-    pros::delay(400);
-    drivetrain.Target_Heading = -225;
-    drivetrain.driveDistance(28,80,Alfa_Straight);  
-    pros::delay(200);
-    SetIntake(127);
-    drivetrain.Turn(-270,80,Alfa_Turn, 9 , 5);
-    drivetrain.driveDistance(7,65,Alfa_Straight);
-    drivetrain.driveDistance(-11,100,Alfa_Straight);
-    drivetrain.Turn(0,100,Alfa_Turn, 9 , 5);
-    drivetrain.driveDistance(61,65,Alfa_Straight);
-    drivetrain.driveDistance(-14,100,Alfa_Straight);
-    drivetrain.Turn(90,75,Alfa_Turn, 9 , 5);
-    drivetrain.driveDistance(11,100,Alfa_Straight);
-    drivetrain.driveDistance(-13,100,Alfa_Straight);
-    drivetrain.Turn(225,100,Alfa_Turn, 9 , 5);
-    drivetrain.driveDistance(-20,100,Alfa_Straight);
-    Mogo.Toggle();
-    drivetrain.driveDistance(7,100,Alfa_Straight);
+    
     
 }
 void Auton_15()
