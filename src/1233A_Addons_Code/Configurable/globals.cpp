@@ -38,6 +38,9 @@ Ramsete RamseteController(
 /*Odometry*/
     &Odom
 );
+DrivePID PIDController(
+    &drivetrain
+);
 Pnumatics MatchLoad(
     /*Port*/
     {'A'},

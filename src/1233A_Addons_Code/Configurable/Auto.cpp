@@ -1,7 +1,7 @@
 #include "main.h"
 extern double WallMech_Target;
 #include <string.h>
-Drivetrain::Straight_PID_Var Alfa_Straight(
+DrivePID::Straight_PID_Var Alfa_Straight(
     /*kP*/
     .070,
     /*kI*/
@@ -13,7 +13,7 @@ Drivetrain::Straight_PID_Var Alfa_Straight(
     /*kAI*/
     0
     );
-Drivetrain::Straight_PID_Var Beta_Straight(
+DrivePID::Straight_PID_Var Beta_Straight(
     /*kP*/
     .13,
     /*kI*/
@@ -25,7 +25,7 @@ Drivetrain::Straight_PID_Var Beta_Straight(
     /*kAI*/
     0
     );
-Drivetrain::Turn_PID_Var Alfa_Turn(
+DrivePID::Turn_PID_Var Alfa_Turn(
     /*kP*/
     1.2,
     /*kI*/
@@ -35,7 +35,7 @@ Drivetrain::Turn_PID_Var Alfa_Turn(
     /*Passive Power*/
     true
     );
-Drivetrain::Turn_PID_Var Beta_Turn(
+DrivePID::Turn_PID_Var Beta_Turn(
     /*kP*/
     1.8,
     /*kI*/
@@ -45,7 +45,7 @@ Drivetrain::Turn_PID_Var Beta_Turn(
     /*Passive Power*/
     true
     );
-Drivetrain::Swing_PID_Var Alfa_Swing(
+DrivePID::Swing_PID_Var Alfa_Swing(
     /*kP*/
     1.3,
     /*kI*/
@@ -239,7 +239,7 @@ void Auton_2()
 }
 void Auton_3()
 {
-    drivetrain.driveDistance(10,75,Alfa_Straight);
+    PIDController.driveDistance(10,75,Alfa_Straight);
     
 }
 //Negitive Side
@@ -260,7 +260,7 @@ void Auton_6()
 //Start of postive sides
 void Auton_7()
 {
-    
+
 
 }
 void Auton_8()
@@ -305,13 +305,13 @@ void Auton_15()
 void Auton_16()
 {
     pros::delay(2000);
-    drivetrain.Turn(90,110,Alfa_Turn);
+    PIDController.Turn(90,110,Alfa_Turn);
     pros::delay(200);
-    drivetrain.Turn(180,110,Alfa_Turn);
+    PIDController.Turn(180,110,Alfa_Turn);
     pros::delay(200);
-    drivetrain.Turn(270,110,Alfa_Turn);
+    PIDController.Turn(270,110,Alfa_Turn);
     pros::delay(200);
-    drivetrain.Turn(0,110,Alfa_Turn);
+    PIDController.Turn(0,110,Alfa_Turn);
 }
 void Auton_17()
 {

@@ -67,6 +67,7 @@ void opcontrol() {
 		Driver_Intake();
 		
 		MatchLoad.Control();
+		MiddleBlock.Control();
 		pros::delay(20);
 
 	}

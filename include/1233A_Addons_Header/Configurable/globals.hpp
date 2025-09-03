@@ -9,6 +9,7 @@ extern pros::Motor TankRoller;
 extern Drivetrain drivetrain;
 extern Odometry Odom;
 extern Ramsete RamseteController;
+extern DrivePID PIDController;
 extern Pnumatics MatchLoad;
 extern Pnumatics MiddleBlock;
 

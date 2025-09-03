@@ -64,7 +64,7 @@
             }
             // Calculated global position
             double p = heading - delta_angle / 2.0;
-
+            
             position.x += cos(p) * local_x - sin(p) * local_y;
             position.y += cos(p) * local_y + sin(p) *local_x;
 
