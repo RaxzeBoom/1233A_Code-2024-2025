@@ -48,15 +48,15 @@ void StopTankRoller()
 
 void IntakeIn(int FrontPower, int TankPower, int TopPower)
 {
-    SetFrontRoller(-FrontPower); //Neg
+    SetFrontRoller(FrontPower); //Neg
     SetTankRoller(-TankPower); //Neg
-    SetTopRoller(TopPower); //Pos
+    //SetTopRoller(TopPower); //Pos
 }
 void IntakeOut(int FrontPower, int TankPower, int TopPower)
 {
-    SetFrontRoller(FrontPower); //Pos
+    SetFrontRoller(-FrontPower); //Pos
     SetTankRoller(TankPower); //Pos
-    SetTopRoller(TopPower); //Pos
+    //SetTopRoller(TopPower); //Pos
 }
 void Scoremid(int FrontPower, int TankPower, int TopPower)
 {
