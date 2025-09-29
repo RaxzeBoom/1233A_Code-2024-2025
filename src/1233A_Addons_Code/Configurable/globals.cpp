@@ -19,17 +19,23 @@ Drivetrain drivetrain(
 Odometry Odom(
 /*Drivetrain*/
     &drivetrain ,
-/*Robot Width*/
-    13.5,
-/*Middle Distance*/
-    0,
-/*Horizontal Tracker Port*/
+/*Horiz Offset*/
+    7.5,
+/*Left Offset*/
+    7.5,
+/*Right Offset*/
+    7.5,
+/*Left Tracker Port*/
     4,
-/*Vertical Tracker Port*/
+/*Right Tracker Port*/
+    4,
+/*Horiz Tracker Port*/
     5,
-/*Vertical Degrees Per an inch*/
+/*Left ticks per inch*/
     1,
-/*Horizontal Degrees Per an inch*/
+/*Right ticks per inch*/
+    1,
+/*Horiz ticks per inch*/
     1
 );
 Ramsete RamseteController(
