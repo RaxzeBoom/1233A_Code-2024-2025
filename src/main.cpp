@@ -54,8 +54,8 @@ void autonomous() {
 //extern pros::Task RPM_Task;
 void opcontrol() {
 	FrontRoller.set_brake_mode(MOTOR_BRAKE_COAST);
-	TankRoller.set_brake_mode(MOTOR_BRAKE_COAST);
-	TopRoller.set_brake_mode(MOTOR_BRAKE_COAST);
+	MiddleRoller.set_brake_mode(MOTOR_BRAKE_COAST);
+	HoodRoller.set_brake_mode(MOTOR_BRAKE_COAST);
 
 	TrackerOn = false;
 	drivetrain.Change_Brake_Type(Drivetrain::COAST);

@@ -3,12 +3,12 @@
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 //Drive Motor Configation
 pros::Motor FrontRoller(5,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
-pros::Motor TankRoller(-15,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
-pros::Motor TopRoller(4,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::Motor MiddleRoller(-15,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::Motor HoodRoller(-8,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
 
 Drivetrain drivetrain(
 /*Left Motors Ports*/
-    {-2    ,-3    ,-14} ,
+    {-2    ,-4    ,-14} ,
 /*Right Motors Ports*/
     {18      ,19     ,21} ,
 /*IMUs Ports*/ 

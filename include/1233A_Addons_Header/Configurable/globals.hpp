@@ -3,8 +3,8 @@
 extern pros::Controller controller;
 //More motor setup here
 extern pros::Motor FrontRoller;
-extern pros::Motor TopRoller;
-extern pros::Motor TankRoller;
+extern pros::Motor MiddleRoller;
+extern pros::Motor HoodRoller;
 //Class Setups here
 extern Drivetrain drivetrain;
 extern Odometry Odom;

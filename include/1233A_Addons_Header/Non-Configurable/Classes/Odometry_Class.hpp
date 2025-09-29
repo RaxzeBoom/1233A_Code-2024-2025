@@ -9,19 +9,19 @@ public:
         double y;
     };
     point position = {0,0};
-    double tpi = 1 , middleTpi = 1;
+    double HorizTPI = 1 , LeftTPI = 1, RightTPI = 1;
 private:
     Drivetrain* dTrain;
     bool Updating = false;
-    double middleWheel;
-    double verticalOffset;
-    double middleDist;
-    pros::v5::Rotation* horizontalSensor;
-    pros::v5::Rotation* verticalSensor;
+    double HorizOffset;
+    double LeftOffset;
+    double RightOffset;
+    pros::v5::Rotation* LeftTracker;
+    pros::v5::Rotation* RightTracker;
+    pros::v5::Rotation* HorizTracker;
 
 public:
-    bool Using_Middle_Wheel = false;
-    Odometry(Drivetrain* dTrain_ , double verticalOffset , double middleDist_, int horizontalPort, int verticalPort, double tpi_, double  middleTPI_);
+    Odometry(Drivetrain* dTrain_ , double HorizOffset_ , double LeftOffset_, double RightOffset_, int LeftPort, int RightPort, int HorizPort, double LeftTPI_, double RightTPI_, double  HorizTPI_);
     void Update();
 
 };

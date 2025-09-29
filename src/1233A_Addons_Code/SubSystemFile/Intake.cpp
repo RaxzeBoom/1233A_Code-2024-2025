@@ -1,23 +1,23 @@
 #include "main.h"
 extern int DriverIntakeInSpeed[3];
 extern int DriverIntakeOutSpeed[3];
-extern int DriverScoremidSpeed[3];
+extern int DriverScoreMidSpeed[3];
 extern int DriverScoreHighSpeed[3];
 extern int Driver_FrontRoller_Speed;
-extern int Driver_TopRoller_Speed;
-extern int Driver_TankRoller_Speed;
+extern int Driver_HoodRoller_Speed;
+extern int Driver_MiddleRoller_Speed;
 extern pros::controller_digital_e_t IntakeInButton;
 extern pros::controller_digital_e_t IntakeOutButton;
-extern pros::controller_digital_e_t ScoremidButton;
+extern pros::controller_digital_e_t ScoreMidButton;
 extern pros::controller_digital_e_t ScoreHighButton;
 extern pros::controller_digital_e_t FrontRollerFwdButton;
 extern pros::controller_digital_e_t FrontRollerRevButton;
-extern pros::controller_digital_e_t TankRollerFwdButton;
-extern pros::controller_digital_e_t TankRollerRevButton;
-extern pros::controller_digital_e_t TopRollerFwdButton;
-extern pros::controller_digital_e_t TopRollerRevButton;
+extern pros::controller_digital_e_t MiddleRollerFwdButton;
+extern pros::controller_digital_e_t MiddleRollerRevButton;
+extern pros::controller_digital_e_t HoodRollerFwdButton;
+extern pros::controller_digital_e_t HoodRollerRevButton;
 extern pros::controller_digital_e_t ModeSwitchButton;
-
+int ButtonPress[6];
 
 
 
@@ -29,52 +29,52 @@ void StopFrontRoller()
 {
     FrontRoller.brake();
 }
-void SetTopRoller(int power)
+void SetHoodRoller(int power)
 {
-    TopRoller.move(power);
+    HoodRoller.move(power);
 }
-void StopTopRoller()
+void StopHoodRoller()
 {
-    TopRoller.brake();
+    HoodRoller.brake();
 }
-void SetTankRoller(int power)
+void SetMiddleRoller(int power)
 {
-    TankRoller.move(power);
+    MiddleRoller.move(power);
 }
-void StopTankRoller()
+void StopMiddleRoller()
 {
-    TankRoller.brake();
+    MiddleRoller.brake();
 }
 
-void IntakeIn(int FrontPower, int TankPower, int TopPower)
+void IntakeIn(int FrontPower, int MiddlePower, int HoodPower)
+{
+    SetFrontRoller(-FrontPower); 
+    SetMiddleRoller(-MiddlePower); 
+    SetHoodRoller(-HoodPower); 
+}
+void IntakeOut(int FrontPower, int MiddlePower, int HoodPower)
+{
+    SetFrontRoller(FrontPower); 
+    SetMiddleRoller(MiddlePower); 
+    SetHoodRoller(HoodPower); 
+}
+void ScoreMid(int FrontPower, int MiddlePower, int HoodPower)
+{
+    SetFrontRoller(-FrontPower); //Neg
+    SetMiddleRoller(-MiddlePower); //Pos
+    //SetHoodRoller(HoodPower); //Pos
+}
+void ScoreHigh(int FrontPower, int MiddlePower, int HoodPower)
 {
     SetFrontRoller(FrontPower); //Neg
-    SetTankRoller(-TankPower); //Neg
-    //SetTopRoller(TopPower); //Pos
-}
-void IntakeOut(int FrontPower, int TankPower, int TopPower)
-{
-    SetFrontRoller(-FrontPower); //Pos
-    SetTankRoller(TankPower); //Pos
-    //SetTopRoller(TopPower); //Pos
-}
-void Scoremid(int FrontPower, int TankPower, int TopPower)
-{
-    SetFrontRoller(-FrontPower); //Neg
-    SetTankRoller(TankPower); //Pos
-    SetTopRoller(TopPower); //Pos
-}
-void ScoreHigh(int FrontPower, int TankPower, int TopPower)
-{
-    SetFrontRoller(-FrontPower); //Neg
-    SetTankRoller(TankPower); //Pos
-    SetTopRoller(-TopPower); //Neg
+    SetMiddleRoller(MiddlePower); //Pos
+    //SetHoodRoller(-HoodPower); //Neg
 }
 void StopAll()
 {
     StopFrontRoller();
-    StopTankRoller();
-    StopTopRoller();
+    StopMiddleRoller();
+    StopHoodRoller();
 }
 bool DriverIntakeMode = false; //False = Muti Control True = Single Control
 void DriverIntakeModeControl()
@@ -97,9 +97,9 @@ void Driver_Intake() {
     }else if (controller.get_digital(IntakeOutButton))
     {
         IntakeOut(DriverIntakeOutSpeed[0],DriverIntakeOutSpeed[1],DriverIntakeOutSpeed[2]);
-    }else if (controller.get_digital(ScoremidButton))
+    }else if (controller.get_digital(ScoreMidButton))
     {
-        Scoremid(DriverScoremidSpeed[0],DriverScoremidSpeed[1],DriverScoremidSpeed[2]);
+        ScoreMid(DriverScoreMidSpeed[0],DriverScoreMidSpeed[1],DriverScoreMidSpeed[2]);
     }else if (controller.get_digital(ScoreHighButton))
     {
         ScoreHigh(DriverScoreHighSpeed[0],DriverScoreHighSpeed[1],DriverScoreHighSpeed[2]);
@@ -114,25 +114,42 @@ void Driver_Intake() {
     if (controller.get_digital(FrontRollerFwdButton))
     {
         SetFrontRoller(Driver_FrontRoller_Speed);
-    }else if (controller.get_digital(FrontRollerRevButton))
+        ButtonPress[0] = 1;
+    }
+    else {ButtonPress[0] = 0;}
+    if (controller.get_digital(FrontRollerRevButton))
     {
         SetFrontRoller(-Driver_FrontRoller_Speed);
-    }else if (controller.get_digital(TankRollerFwdButton))
+    ButtonPress[1] = 1;
+    }
+    else {ButtonPress[1] = 0;}
+    if (controller.get_digital(MiddleRollerFwdButton))
     {
-        SetTankRoller(Driver_TankRoller_Speed);
-    }else if (controller.get_digital(TankRollerRevButton))
+        SetMiddleRoller(Driver_MiddleRoller_Speed);
+    ButtonPress[2] = 1;
+    }
+    else {ButtonPress[2] = 0;}
+    if (controller.get_digital(MiddleRollerRevButton))
     {
-        SetTankRoller(-Driver_TankRoller_Speed);
-    }else if (controller.get_digital(TopRollerFwdButton))
+        SetMiddleRoller(-Driver_MiddleRoller_Speed);
+    ButtonPress[3] = 1;
+    }
+    else {ButtonPress[3] = 0;}
+    if (controller.get_digital(HoodRollerFwdButton))
     {
-        SetTopRoller(Driver_TopRoller_Speed);
-    }else if (controller.get_digital(TopRollerRevButton))
+        SetHoodRoller(Driver_HoodRoller_Speed);
+    ButtonPress[4] = 1;
+    }
+    else {ButtonPress[4] = 0;}
+    if (controller.get_digital(HoodRollerRevButton))
     {
-        SetTopRoller(-Driver_TopRoller_Speed);
-    }else
+        SetHoodRoller(-Driver_HoodRoller_Speed);
+    ButtonPress[5] = 1;
+    }
+    else {ButtonPress[5] = 0;}
+    if(std::find(std::begin(ButtonPress),std::end(ButtonPress),1) == std::end(ButtonPress))
     {
         StopAll();
     }
-        
-   }
+    }
 }
