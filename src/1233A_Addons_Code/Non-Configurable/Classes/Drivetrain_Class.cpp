@@ -1,15 +1,24 @@
 #include "main.h"
-    //Makes a Drivetrain Class for controlling drivetrain functions{All Left Motor Ports | All Right Motor Ports | All IMUs | The wheel diamter | Driven gear then Powered gear}W
-    Drivetrain::Drivetrain(const std::vector<int>& leftMotorPorts, const std::vector<int>& rightMotorPorts, const std::vector<int>& IMU_Ports , double StraightTPI_) {
+    //Makes a Drivetrain Class for controlling drivetrain functions{All Left Motor Ports | All Right Motor Ports | All IMUs | The wheel diamter | Driven gear then Powered gear}
+    Drivetrain::Drivetrain(const std::vector<int>& leftMotorPorts, const std::vector<int>& rightMotorPorts, const std::vector<int>& IMU_Ports , double StraightTPI_, int MotorRPM_) {
         for (int port : leftMotorPorts) {
             leftMotors.emplace_back(port,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
         }
         for (int port : rightMotorPorts) {
             rightMotors.emplace_back(port,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
         }
-        for (int port : IMU_Ports){
-            IMU_List.emplace_back(port);
+        if(IMU_Ports[0] == 0)
+        {
+            UsingIMU = false;
         }
+        else
+        {
+            UsingIMU = true;
+            for (int port : IMU_Ports){
+                IMU_List.emplace_back(port);
+            }
+        }
+        MotorRPM = MotorRPM_;
         StraightTPI = StraightTPI_;
     }
     //Sets a list of Motors to a set speed up to 127
@@ -18,9 +27,10 @@
             motor.move(speed);
         }
     }
+    //Sets a list of Motors to a set speed converted to velocity.
     void Drivetrain::Set_Drive_Motors_Vel(std::vector<pros::Motor>& motors, double speed) {
         for (pros::Motor motor : motors) {
-            motor.move_velocity(speed*(600/127));
+            motor.move_velocity(speed*(MotorRPM/127));
         }
     }
     //Give basic tank drive in driver control
@@ -73,6 +83,7 @@
     }
     //Runs basic commands for drivetrain
     void Drivetrain::Initialize(){
+        if(UsingIMU == false) return;
         for (pros::Imu IMU : IMU_List){
             IMU.reset();
         }
@@ -147,6 +158,7 @@
     }
     //Get the average heading from the IMU
     double Drivetrain::Get_Heading(){
+        if(UsingIMU == false) return 0;
         double total = 0;
         for(pros::Imu IMU : IMU_List){
             total = total + IMU.get_heading();//fmod((IMU.get_heading()+180), 360.0)-180.0;//IMU.get_heading();
@@ -156,6 +168,7 @@
     }
     //Sets the heading on all IMU
     void Drivetrain::Set_Heading(double heading_){
+        if(UsingIMU == false) return;
         for(pros::Imu IMU : IMU_List){
             IMU.set_heading(heading_);
         }
@@ -186,12 +199,13 @@
             Motor.set_brake_mode(prosBrakeType);
         }
     }
-    
+    //Drive at a set speed for a time in Msec
     void Drivetrain::driveDistance(double speed, double time){
         Set_Drivetrain(speed,speed);
         pros::delay(time);
         Set_Drivetrain(0,0);
     }
+    //Drive at a set speed(Controled for each side) for a time in Msec
     void Drivetrain::driveDistance(std::vector<double> speed, double time){
         Set_Drivetrain_Vel(speed.at(0),speed.at(1));
         pros::delay(time);

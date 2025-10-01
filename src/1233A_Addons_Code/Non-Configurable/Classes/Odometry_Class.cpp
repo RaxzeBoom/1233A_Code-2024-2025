@@ -60,9 +60,9 @@
             double LocalAngle = atan2(LocalY,LocalX); // Find the angle of the local Polor Coord
             double GlobalAngle = LocalAngle + AngleAVG; 
 
-            position.x = r * cos(GlobalAngle);
-            position.y = r * sin(GlobalAngle);
-
+            position.x += r * cos(GlobalAngle);
+            position.y += r * sin(GlobalAngle);
+            Heading = Angle;
             // Store previous positions
             PrevHoriz = HorizPos;
             PrevLeft = LeftPos;

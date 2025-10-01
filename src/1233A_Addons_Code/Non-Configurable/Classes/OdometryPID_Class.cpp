@@ -6,7 +6,7 @@ OdometryPID::OdometryPID(Drivetrain* dTrain_ , Odometry* Odom_)
     Odom = Odom_;
 }
 
-void OdometryPID::turnToHeading(int target)
+void OdometryPID::TurnToHeading(double Target, double MaxSpeed, PIDVars)
 {   
-    dTrain->Get_Heading();
+    //K = error * kP + totalerror * kI + (PrevError - Error * kD)
 }

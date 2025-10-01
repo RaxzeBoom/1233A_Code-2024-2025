@@ -9,6 +9,7 @@ public:
         double y;
     };
     point position = {0,0};
+    double Heading;
     double HorizTPI = 1 , LeftTPI = 1, RightTPI = 1;
 private:
     Drivetrain* dTrain;

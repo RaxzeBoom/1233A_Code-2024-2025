@@ -15,7 +15,13 @@ void GUI(void* param)
 	}
 	Start_GUI();
 }
+void ChassisControl(void* param)
+{
+	while(true)
+	{
 
+	}
+}
 
 void initialize() {
 	
@@ -24,6 +30,7 @@ void initialize() {
 	drivetrain.Initialize();
 	pros::screen::touch_callback(UI_Touch, TOUCH_PRESSED);
 	//pros::Task  Odem_Update(GUI);
+	pros::Task ChassisMovement(ChassisControl);
 }
 
 /**

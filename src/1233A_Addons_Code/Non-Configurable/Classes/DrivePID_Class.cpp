@@ -35,14 +35,13 @@ DrivePID::Straight_PID_Var::Straight_PID_Var(double kP_, double kI_, double kD_,
     
         // Constants and initial calculations
         const double target = inches *  dTrain->StraightTPI/24;
-        //(((inches / (Wheel_Diameter * M_PI)) * 360 )/ Gear_Ratio)/ 1.1;
         const double Max = 127; //Max speed for motors
     
         // PID constants, adjust or utilize as passed from the structure
         double kP = variable.kP * (inches <= 14 ? 2 : 1);
         double kI = variable.kI, kD = variable.kD;
     
-        // P constants for heading correction
+        // PI constants for heading correction
         double kP_heading = variable.kA;
         double kI_heading = variable.kAI;
     

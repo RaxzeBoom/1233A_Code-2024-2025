@@ -12,9 +12,11 @@ Drivetrain drivetrain(
 /*Right Motors Ports*/
     {18      ,19     ,21} ,
 /*IMUs Ports*/ 
-    {13} , 
+    {0} , 
 /*Straight TPI*/
-    1110.8+50
+    1110.8+50,
+/*Motor RPM*/
+    600
 );
 Odometry Odom(
 /*Drivetrain*/

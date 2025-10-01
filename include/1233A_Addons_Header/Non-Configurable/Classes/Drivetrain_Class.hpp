@@ -9,6 +9,8 @@ class Drivetrain {
     };
 
     public: 
+    bool UsingIMU;
+    int MotorRPM;
     std::vector<pros::Motor> leftMotors;
     std::vector<pros::Motor> rightMotors;
     std::vector<pros::IMU> IMU_List;
@@ -26,7 +28,7 @@ class Drivetrain {
     double Get_Temp();
     void Reset_Motor_Position();
     public:
-    Drivetrain(const std::vector<int>& leftMotorPorts, const std::vector<int>& rightMotorPorts, const std::vector<int>& IMU_Ports ,double StraightTPI_);
+    Drivetrain(const std::vector<int>& leftMotorPorts, const std::vector<int>& rightMotorPorts, const std::vector<int>& IMU_Ports ,double StraightTPI_, int MotorRPM_);
     void Initialize();
     void Driver_Control();
     void Set_Side_Drivetrain(char side , double speed);
