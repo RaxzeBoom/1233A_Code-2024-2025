@@ -17,8 +17,11 @@
             double Kd;
         };
         OdometryPID(Drivetrain* dTrain_ , Odometry* Odom_);
-        void TurnToHeading(double Target, double MaxSpeed, PIDVars);
-        void TurnToPoint(point Point);
-        void GoToPoint(point Point);
+        double NormalToVex(double angle);
+        double VexToNormal(double angle);
+        void WaitTillDone();
+        void TurnToHeading(double Target, double MaxSpeed, PIDVars Vars);
+        void TurnToPoint(point Point, double MaxSpeed, PIDVars Vars);
+        void GoToPoint(point Point, double MaxSpeed, PIDVars DisVars, PIDVars AngleVars);
     };
     
