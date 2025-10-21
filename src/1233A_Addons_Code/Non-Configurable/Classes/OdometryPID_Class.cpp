@@ -106,7 +106,7 @@ void OdometryPID::GoToPoint(point Point, double MaxSpeed, PIDVars DisVars, PIDVa
         DeltaAngleError = PrevAngleError - AngleError; // Calculates the change in Error for Angle
         double Kang = AngleError * AngleVars.Kp + TotalAngleError * AngleVars.Ki + DeltaAngleError * AngleVars.Kd; // Main Angle PID loop 
         
-        double LSpeed = Kdis + Kang;
+        double LSpeed = Kdis + Kang; // Finds each sides speed by add or subtrating the PID angle from output of the distance PID
         double RSpeed = Kdis - Kang;
 
         if(fabs(AngleError) > IntergalStart)

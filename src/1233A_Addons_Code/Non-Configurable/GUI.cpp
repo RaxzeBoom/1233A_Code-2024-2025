@@ -26,10 +26,10 @@ void autoInfoDrawer()
 {
     pros::screen::print(pros::E_TEXT_SMALL,200,20,"X = %3d", Odom.position.x);
     pros::screen::print(pros::E_TEXT_SMALL,200,40,"Y = %3d", Odom.position.y);
-    pros::screen::print(pros::E_TEXT_SMALL,200,60,"Heading = %3f", drivetrain.Get_Heading());
+    pros::screen::print(pros::E_TEXT_SMALL,200,60,"Heading = %3f", Odom.Heading);
     pros::screen::print(pros::E_TEXT_SMALL,200,80,"Time = %3d", pros::micros());
-    pros::screen::print(pros::E_TEXT_SMALL,200,100,"Sub Time =  %3d", pros::micros() - RamseteController.startTime);
-    pros::screen::print(pros::E_TEXT_SMALL,200,120,"Index %3d", RamseteController.index);
+    //pros::screen::print(pros::E_TEXT_SMALL,200,100,"Sub Time =  %3d", pros::micros() - RamseteController.startTime);
+    //pros::screen::print(pros::E_TEXT_SMALL,200,120,"Index %3d", RamseteController.index);
 }
 void Start_GUI()
 {

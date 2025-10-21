@@ -60,15 +60,15 @@ void IntakeOut(int FrontPower, int MiddlePower, int HoodPower)
 }
 void ScoreMid(int FrontPower, int MiddlePower, int HoodPower)
 {
-    SetFrontRoller(-FrontPower); //Neg
-    SetMiddleRoller(-MiddlePower); //Pos
-    //SetHoodRoller(HoodPower); //Pos
+    SetFrontRoller(-FrontPower); 
+    SetMiddleRoller(-MiddlePower); 
+    //SetHoodRoller(HoodPower); 
 }
 void ScoreHigh(int FrontPower, int MiddlePower, int HoodPower)
 {
-    SetFrontRoller(FrontPower); //Neg
-    SetMiddleRoller(MiddlePower); //Pos
-    //SetHoodRoller(-HoodPower); //Neg
+    SetFrontRoller(FrontPower); 
+    SetMiddleRoller(MiddlePower); 
+    //SetHoodRoller(-HoodPower); 
 }
 void StopAll()
 {

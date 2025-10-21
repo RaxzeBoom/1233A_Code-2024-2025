@@ -19,7 +19,8 @@ void ChassisControl(void* param)
 {
 	while(true)
 	{
-
+		Odom.Update();
+		pros::delay(20);
 	}
 }
 
@@ -64,7 +65,7 @@ void opcontrol() {
 	MiddleRoller.set_brake_mode(MOTOR_BRAKE_COAST);
 	HoodRoller.set_brake_mode(MOTOR_BRAKE_COAST);
 
-	TrackerOn = false;
+	//TrackerOn = false;
 	drivetrain.Change_Brake_Type(Drivetrain::COAST);
 	
 	while (true) {

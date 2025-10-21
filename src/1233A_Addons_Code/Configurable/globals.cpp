@@ -40,9 +40,9 @@ Odometry Odom(
 /*Horiz ticks per inch*/
     1
 );
-Ramsete RamseteController(
+OdometryPID OdomController(
 /*Drivetrain*/
-    &drivetrain, 
+    &drivetrain,
 /*Odometry*/
     &Odom
 );
