@@ -24,12 +24,13 @@ void Drive_Train_Heat_Drawer(int Drive_Train_Heat)
 }
 void autoInfoDrawer()
 {
-    pros::screen::print(pros::E_TEXT_SMALL,200,20,"X = %3d", Odom.position.x);
-    pros::screen::print(pros::E_TEXT_SMALL,200,40,"Y = %3d", Odom.position.y);
-    pros::screen::print(pros::E_TEXT_SMALL,200,60,"Heading = %3f", Odom.Heading);
+    pros::screen::print(pros::E_TEXT_SMALL,200,20,"X = %3f", Odom.position.x);
+    pros::screen::print(pros::E_TEXT_SMALL,200,40,"Y = %3f", Odom.position.y);
+    pros::screen::print(pros::E_TEXT_SMALL,200,60,"Heading = %3f", Odom.Heading * 180/M_PI);
     pros::screen::print(pros::E_TEXT_SMALL,200,80,"Time = %3d", pros::micros());
-    //pros::screen::print(pros::E_TEXT_SMALL,200,100,"Sub Time =  %3d", pros::micros() - RamseteController.startTime);
-    //pros::screen::print(pros::E_TEXT_SMALL,200,120,"Index %3d", RamseteController.index);
+    pros::screen::print(pros::E_TEXT_SMALL,200,100,"Left = %3d         ", Odom.LeftTracker.get_position());
+    pros::screen::print(pros::E_TEXT_SMALL,200,120,"Right = %3d         ", Odom.RightTracker.get_position());
+    pros::screen::print(pros::E_TEXT_SMALL,200,140,"Horz = %3d          ", Odom.HorizTracker.get_position());
 }
 void Start_GUI()
 {
@@ -41,6 +42,6 @@ void Start_GUI()
         Drive_Train_Heat_Drawer(Drive_Train_Heat);
         autoInfoDrawer();
         pros::delay(40);
-        Odom.Update();
+        //Odom.Update();
     }
 }

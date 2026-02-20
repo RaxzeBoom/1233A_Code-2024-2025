@@ -1,10 +1,8 @@
 #include "main.h"
 
-OdometryPID::OdometryPID(Drivetrain* dTrain_ , Odometry* Odom_)
-{
-    dTrain = dTrain_;
-    Odom = Odom_;
-}
+OdometryPID::OdometryPID(Drivetrain* dTrain_ , Odometry* Odom_) 
+: dTrain(dTrain_) , Odom(Odom_)
+{}
 
 double OdometryPID::NormalToVex(double angle)
 {
@@ -14,6 +12,14 @@ double OdometryPID::VexToNormal(double angle)
 {
     return ((angle - 90) * -1);
 }
+double OdometryPID::RadtoDeg(double Rad)
+{
+    return Rad * (180/M_PI);
+}
+double OdometryPID::ShortestAngle(double angle)
+{
+    return fmod(angle+180,360)-180;
+}
 void OdometryPID::WaitTillDone()
 {
     //TODO change Odom PID to use tasks to allow commands to be run mid PID loop
@@ -21,7 +27,8 @@ void OdometryPID::WaitTillDone()
 // Using a simple PID loop to turn to a target heading
 void OdometryPID::TurnToHeading(double Target, double MaxSpeed, PIDVars Vars)
 {   
-    double ExitError = 1; //Variable to easily change PID exit Conditions
+    dTrain->Change_Brake_Type(Drivetrain::BRAKE);
+    double ExitError = 0.1; //Variable to easily change PID exit Conditions
     double IntergalStart = 15; // Variable to easily change when Intergal should start gaining
 
     //Pos = right Pos error = left forward right backwards
@@ -30,7 +37,7 @@ void OdometryPID::TurnToHeading(double Target, double MaxSpeed, PIDVars Vars)
     while (true)
     {
 
-        Error = fmod((Target - Odom->Heading) + 180,360)-180; // Finds the shortest angle towards target
+        Error = fmod((Target - ShortestAngle(RadtoDeg(Odom->Heading))) + 180,360)-180; // Finds the shortest angle towards target
         DeltaError = (PrevError - Error);
 
         double K = Error * Vars.Kp + TotalError * Vars.Ki + DeltaError * Vars.Kd; // Main PID loop 
@@ -50,6 +57,7 @@ void OdometryPID::TurnToHeading(double Target, double MaxSpeed, PIDVars Vars)
         }
         if(fabs(Error) < ExitError)
         {
+            dTrain->Set_Drivetrain(0,0);
             return; // Exits the loop when close to target
         }
 
@@ -64,6 +72,7 @@ void OdometryPID::TurnToHeading(double Target, double MaxSpeed, PIDVars Vars)
 //Same as Turn to Heading execpt accept a point to point towards 
 void OdometryPID::TurnToPoint(point Point, double MaxSpeed, PIDVars Vars)
 {
+    dTrain->Change_Brake_Type(Drivetrain::BRAKE);
     //Calculate heading from current pos and target pos to look at then plug the target into turn to heading
     double DeltaX = Point.x - Odom->position.x; //Finds the differnt of the X and Y points to calculate the angle of the vector
     double DeltaY = Point.y - Odom->position.y;
@@ -74,6 +83,7 @@ void OdometryPID::TurnToPoint(point Point, double MaxSpeed, PIDVars Vars)
 
 void OdometryPID::GoToPoint(point Point, double MaxSpeed, PIDVars DisVars, PIDVars AngleVars)
 {
+    dTrain->Change_Brake_Type(Drivetrain::BRAKE);
     //Calcs a vector to follow and will try to return to vector if thrown off
 
     double ExitError = 1; //Variable to easily change PID exit Conditions
@@ -100,7 +110,7 @@ void OdometryPID::GoToPoint(point Point, double MaxSpeed, PIDVars DisVars, PIDVa
         VectorDistance = Distance * cos(VexToNormal(DeltaAngle)); 
         DistanceError = VectorDistance;
         TargetAngle = IntialAngle - (DeltaAngle * 2); // Calucates a angle that will turn the robot toward the intation vector allowing it to get back onto it
-        AngleError = fmod((TargetAngle - Odom->Heading) + 180,360)-180; //Calclates the error of the angle of the bot needs to follow
+        AngleError = fmod((TargetAngle - ShortestAngle(RadtoDeg(Odom->Heading))) + 180,360)-180; //Calclates the error of the angle of the bot needs to follow
         DeltaDistanceError = PrevDistanceError - DistanceError; // Calculates the change in Error for Distance
         double Kdis = DistanceError * DisVars.Kp + TotalDistanceError * DisVars.Ki + DeltaDistanceError * DisVars.Kd; // Main distance PID loop 
         DeltaAngleError = PrevAngleError - AngleError; // Calculates the change in Error for Angle

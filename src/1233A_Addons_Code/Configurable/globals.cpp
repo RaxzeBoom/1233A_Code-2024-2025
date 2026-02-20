@@ -2,17 +2,24 @@
 //Controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 //Drive Motor Configation
-pros::Motor FrontRoller(5,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
-pros::Motor MiddleRoller(-15,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
-pros::Motor HoodRoller(-8,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::Motor BottomRoller(17,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+pros::Motor TopRoller(-8,pros::v5::MotorGear::blue,pros::v5::MotorUnits::degrees);
+
+MotorController::ControllerAssigner IntakeInControl(pros::E_CONTROLLER_DIGITAL_R1, {0} , {127});
+MotorController::ControllerAssigner IntakeOutControl(pros::E_CONTROLLER_DIGITAL_R2, {0} , {-127});
+MotorController::ControllerAssigner ScoreFwdControl(pros::E_CONTROLLER_DIGITAL_L1, {0,1} , {127,127});
+MotorController::ControllerAssigner ScoreRevControl(pros::E_CONTROLLER_DIGITAL_L2, {0,1} , {127,-127});
+MotorController Intake({&BottomRoller, &TopRoller,}, {IntakeInControl,IntakeOutControl,ScoreFwdControl,ScoreRevControl});
+
+
 
 Drivetrain drivetrain(
 /*Left Motors Ports*/
-    {-2    ,-4    ,-14} ,
+    {-11    ,-18    ,-19} ,
 /*Right Motors Ports*/
-    {18      ,19     ,21} ,
+    {2      ,3     ,4} ,
 /*IMUs Ports*/ 
-    {0} , 
+    {10} , 
 /*Straight TPI*/
     1110.8+50,
 /*Motor RPM*/
@@ -22,23 +29,23 @@ Odometry Odom(
 /*Drivetrain*/
     &drivetrain ,
 /*Horiz Offset*/
-    7.5,
+    2,
 /*Left Offset*/
-    7.5,
+    5.75,
 /*Right Offset*/
-    7.5,
+    5.75,
 /*Left Tracker Port*/
-    4,
+    12,
 /*Right Tracker Port*/
-    4,
+    14,
 /*Horiz Tracker Port*/
-    5,
+    13,
 /*Left ticks per inch*/
-    1,
+    83250/24,
 /*Right ticks per inch*/
-    1,
+    83250/24,
 /*Horiz ticks per inch*/
-    1
+    97250/24
 );
 OdometryPID OdomController(
 /*Drivetrain*/
@@ -47,11 +54,20 @@ OdometryPID OdomController(
     &Odom
 );
 DrivePID PIDController(
-    &drivetrain
+    &drivetrain,
+    &Odom
 );
 Pnumatics MatchLoad(
     /*Port*/
     {'A'},
+    /*Controller Button For Activation*/
+    pros::E_CONTROLLER_DIGITAL_RIGHT,
+    /*Reverse*/
+    false
+);
+Pnumatics Descore(
+    /*Port*/
+    {'B'},
     /*Controller Button For Activation*/
     pros::E_CONTROLLER_DIGITAL_Y,
     /*Reverse*/
@@ -59,9 +75,9 @@ Pnumatics MatchLoad(
 );
 Pnumatics MiddleBlock(
     /*Port*/
-    {'B'},
+    {'C'},
     /*Controller Button For Activation*/
-    pros::E_CONTROLLER_DIGITAL_X,
+    pros::E_CONTROLLER_DIGITAL_L2,
     /*Reverse*/
     false
 );

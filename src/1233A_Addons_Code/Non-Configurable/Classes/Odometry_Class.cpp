@@ -1,24 +1,16 @@
 #include "main.h"
-    Odometry::Odometry(Drivetrain* dTrain_ , double HorizOffset_ , double LeftOffset_, double RightOffset_, int LeftPort, int RightPort, int HorizPort, double LeftTPI_, double RightTPI_, double  HorizTPI_){
-
-        pros::v5::Rotation leftsensor(LeftPort);
-        LeftTracker = &leftsensor;
-        pros::v5::Rotation rightsensor(RightPort);
-        RightTracker = &rightsensor;
-        pros::v5::Rotation Horizsensor(HorizPort);
-        HorizTracker = &Horizsensor;
-
-        dTrain = dTrain_;
-        HorizOffset = HorizOffset_;
-        LeftOffset = LeftOffset_;
-        RightOffset = RightOffset_;
-        LeftTPI = LeftTPI_;
-        RightTPI = RightTPI_;
-        HorizTPI = HorizTPI_;
+    Odometry::Odometry(Drivetrain* dTrain_ , double HorizOffset_ , double LeftOffset_, double RightOffset_, int LeftPort, int RightPort, int HorizPort, double LeftTPI_, double RightTPI_, double  HorizTPI_)
+    : LeftTracker(LeftPort) , RightTracker(RightPort), HorizTracker(HorizPort), dTrain(dTrain_), HorizOffset(HorizOffset_), LeftOffset(LeftOffset_),
+    RightOffset(RightOffset_), LeftTPI(LeftTPI_), RightTPI(RightTPI_), HorizTPI(HorizTPI_)
+    {
+        RightTracker.reset_position();
+        RightTracker.reverse();
+        LeftTracker.reset_position();
+        HorizTracker.reset_position();
     }
     void Odometry::Update()
     {   
-        Updating == true;
+        Updating = true;
         // Defining variables
         double PrevHoriz, PrevLeft, PrevRight, PrevAngle;
         double HorizPos, LeftPos, RightPos, Angle;
@@ -26,14 +18,14 @@
         while (Updating == true)
         {
             //Sets new positions
-            LeftPos = LeftTracker->get_position() / LeftTPI;
-            RightPos = RightTracker->get_position() / RightTPI;
-            HorizPos = HorizTracker->get_position() / HorizTPI;
+            LeftPos = LeftTracker.get_position() / LeftTPI;
+            RightPos = RightTracker.get_position() / RightTPI;
+            HorizPos = HorizTracker.get_position() / HorizTPI;
 
             // Calculates change in position of tracking wheels
             DeltaHoriz = (HorizPos - PrevHoriz);
-            DeltaLeft = (LeftPos - PrevLeft) / LeftTPI;
-            DeltaRight = (RightPos - PrevRight) / RightTPI;
+            DeltaLeft = (LeftPos - PrevLeft);
+            DeltaRight = (RightPos - PrevRight);
 
             // Calculates change in Angle and global angle
             Angle = (LeftPos-RightPos)/(LeftOffset+RightOffset);
@@ -58,7 +50,7 @@
             // Convernts to Coords into Polor Cords
             double r = sqrt(pow(LocalX,2) + pow(LocalY,2)); // Find the radius of the Local Polor Coord with Distance Formule 
             double LocalAngle = atan2(LocalY,LocalX); // Find the angle of the local Polor Coord
-            double GlobalAngle = LocalAngle + AngleAVG; 
+            double GlobalAngle = LocalAngle - AngleAVG;  // Need to figure out why minus here IDK
 
             position.x += r * cos(GlobalAngle);
             position.y += r * sin(GlobalAngle);

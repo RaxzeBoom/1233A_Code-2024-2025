@@ -83,9 +83,10 @@
     }
     //Runs basic commands for drivetrain
     void Drivetrain::Initialize(){
-        if(UsingIMU == false) return;
+        //if(UsingIMU == false) return;
         for (pros::Imu IMU : IMU_List){
-            IMU.reset();
+            IMU.reset(true);
+            IMU.set_data_rate(25);
         }
     }
     //Resets the Motor positions while stoping them

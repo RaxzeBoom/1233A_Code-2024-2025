@@ -9,7 +9,7 @@ class Drivetrain {
     };
 
     public: 
-    bool UsingIMU;
+    bool UsingIMU = true;
     int MotorRPM;
     std::vector<pros::Motor> leftMotors;
     std::vector<pros::Motor> rightMotors;
